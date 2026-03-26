@@ -174,4 +174,20 @@ if __name__ == "__main__":
     print("🎥 Видео/кружок → GIF")
     print("💾 Telegram должен показать кнопку 'Сохранить в свои GIF'")
     print("=" * 50)
-    bot.infinity_polling()
+    import threading
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Бот работает!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=8080)
+
+# Запускаем веб-сервер в отдельном потоке
+threading.Thread(target=run_web, daemon=True).start()
+
+# Запускаем бота
+bot.infinity_polling()
